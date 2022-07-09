@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"io"
 	"math/rand"
 	"os"
@@ -9,10 +11,23 @@ import (
 
 const overwriteCount = 3
 
+var (
+	fileToShred = flag.String("file", "", "./my-file.txt")
+)
+
 func main() {
 
+	flag.Parse()
+	if *fileToShred == "" {
+		fmt.Println("No file specified to shred. Please use the '-file' argument to specify a file")
+		return
+	}
+
 	rand.Seed(time.Now().Unix())
-	Shred("./test1.txt")
+	err := Shred(*fileToShred)
+	if err != nil {
+		fmt.Println("Error shredding file. Error: " + err.Error())
+	}
 }
 
 func Shred(fPath string) error {
