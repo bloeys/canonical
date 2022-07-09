@@ -1,0 +1,4 @@
+hello, this is a nice
+document.
+
+It has many lines!
